@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Event - VolunteerHub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mb-4">
+    <div class="col-lg-8">
+        <div class="hero-banner mb-0">
+            <h1 class="mb-2">
+                <i class="fas fa-plus-circle"></i>
+                Create New Event
+            </h1>
+            <p>Add a new volunteer opportunity</p>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body p-4">
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+
+                    <!-- Event Name -->
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-heading text-primary"></i>
+                            Event Name
+                        </label>
+                        <input 
+                            type="text"
+                            name="name"
+                            class="form-control"
+                            placeholder="e.g., Community Cleanup"
+                            required
+                        />
+                    </div>
+
+                    <!-- Event Date -->
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-calendar text-primary"></i>
+                            Event Date
+                        </label>
+                        <input 
+                            type="date"
+                            name="date"
+                            class="form-control"
+                            required
+                        />
+                    </div>
+
+                    <!-- Location -->
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-map-marker-alt text-primary"></i>
+                            Location
+                        </label>
+                        <input 
+                            type="text"
+                            name="location"
+                            class="form-control"
+                            placeholder="e.g., Central Park"
+                            required
+                        />
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group mb-4">
+                        <label class="form-label">
+                            <i class="fas fa-align-left text-primary"></i>
+                            Description
+                        </label>
+                        <textarea 
+                            name="description"
+                            class="form-control"
+                            rows="5"
+                            placeholder="Describe the event, what volunteers will do, requirements, etc."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg flex-grow-1">
+                            <i class="fas fa-check-circle me-2"></i>Create Event
+                        </button>
+                        <a href="{% url 'events:admin_dashboard' %}" 
+                           class="btn btn-outline-secondary btn-lg flex-grow-1">
+                            <i class="fas fa-times me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

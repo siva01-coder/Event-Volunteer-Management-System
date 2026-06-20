@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Assign Task - VolunteerHub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mb-4">
+    <div class="col-lg-8">
+        <div class="hero-banner mb-0">
+            <h1 class="mb-2">
+                <i class="fas fa-tasks"></i>
+                Assign Task
+            </h1>
+            <p>Assign a task to {{ registration.volunteer.get_full_name|default:registration.volunteer.username }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <!-- Volunteer Info -->
+            <div class="card-header bg-info">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="mb-1">Volunteer</h6>
+                        <p class="mb-0">
+                            <strong>{{ registration.volunteer.get_full_name|default:registration.volunteer.username }}</strong>
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <h6 class="mb-1">Event</h6>
+                        <p class="mb-0">
+                            <strong>{{ registration.event.name|default:registration.event_name }}</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body p-4">
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+
+                    <!-- Task Title -->
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-heading text-primary"></i>
+                            Task Title
+                        </label>
+                        <input 
+                            type="text"
+                            name="title"
+                            class="form-control"
+                            placeholder="e.g., Collect trash from north section"
+                            required
+                        />
+                    </div>
+
+                    <!-- Task Description -->
+                    <div class="form-group mb-4">
+                        <label class="form-label">
+                            <i class="fas fa-align-left text-primary"></i>
+                            Task Description
+                        </label>
+                        <textarea 
+                            name="description"
+                            class="form-control"
+                            rows="5"
+                            placeholder="Provide detailed instructions for the volunteer..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-success btn-lg flex-grow-1">
+                            <i class="fas fa-check-circle me-2"></i>Assign Task
+                        </button>
+                        <a href="{% url 'events:admin_dashboard' %}" 
+                           class="btn btn-outline-secondary btn-lg flex-grow-1">
+                            <i class="fas fa-times me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

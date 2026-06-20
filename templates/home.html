@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - VolunteerHub{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <!-- Redirect authenticated users to dashboard -->
+    <script>
+        window.location.href = "{% if user.role == 'admin' %}{% url 'events:admin_dashboard' %}{% else %}{% url 'events:volunteer_dashboard' %}{% endif %}";
+    </script>
+{% else %}
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container-lg py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h1 class="display-4 fw-bold mb-4" style="color: var(--dark-color);">
+                        <i class="fas fa-hands-helping"></i>
+                        Make a Difference
+                    </h1>
+                    <p class="lead mb-4">
+                        Join our community of volunteers and help create positive change in your neighborhood. 
+                        Whether you have a few hours or want to make volunteering a regular part of your life, 
+                        VolunteerHub connects you with opportunities that matter.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="{% url 'accounts:register' %}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-user-plus me-2"></i>Get Started
+                        </a>
+                        <a href="{% url 'events:event_list' %}" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-calendar-alt me-2"></i>Browse Events
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div style="background: linear-gradient(135deg, #0d6efd 0%, #198754 100%); 
+                                border-radius: 1rem; padding: 3rem; color: white; text-align: center;">
+                        <i class="fas fa-globe" style="font-size: 4rem; margin-bottom: 1rem; display: block;"></i>
+                        <h3>Volunteer Today</h3>
+                        <p>Be part of something bigger. Make a meaningful impact on your community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="container-lg py-5">
+        <h2 class="text-center mb-5" style="color: var(--dark-color);">Why Join VolunteerHub?</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-search" style="font-size: 2.5rem; color: #0d6efd; margin-bottom: 1rem; display: block;"></i>
+                        <h5 class="card-title">Find Opportunities</h5>
+                        <p class="card-text">Discover volunteer events that match your interests and schedule.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-users" style="font-size: 2.5rem; color: #198754; margin-bottom: 1rem; display: block;"></i>
+                        <h5 class="card-title">Join a Community</h5>
+                        <p class="card-text">Connect with like-minded people who care about making a difference.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-chart-line" style="font-size: 2.5rem; color: #ffc107; margin-bottom: 1rem; display: block;"></i>
+                        <h5 class="card-title">Track Progress</h5>
+                        <p class="card-text">Monitor your volunteer hours and achievements in one place.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-award" style="font-size: 2.5rem; color: #dc3545; margin-bottom: 1rem; display: block;"></i>
+                        <h5 class="card-title">Earn Achievements</h5>
+                        <p class="card-text">Unlock badges and milestones as you help the community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div style="background: linear-gradient(135deg, #0d6efd 0%, #198754 100%); color: white; padding: 3rem 0;">
+        <div class="container-lg">
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <h3 class="fw-bold" style="font-size: 2.5rem;">1,250+</h3>
+                    <p>Active Volunteers</p>
+                </div>
+                <div class="col-md-3">
+                    <h3 class="fw-bold" style="font-size: 2.5rem;">500+</h3>
+                    <p>Events Completed</p>
+                </div>
+                <div class="col-md-3">
+                    <h3 class="fw-bold" style="font-size: 2.5rem;">5,000+</h3>
+                    <p>Hours Volunteered</p>
+                </div>
+                <div class="col-md-3">
+                    <h3 class="fw-bold" style="font-size: 2.5rem;">50+</h3>
+                    <p>Communities Served</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="container-lg py-5">
+        <div class="text-center">
+            <h2 class="mb-4" style="color: var(--dark-color);">Ready to Make a Difference?</h2>
+            <p class="lead mb-4 text-muted">
+                Join thousands of volunteers who are already making an impact. 
+                Sign up in just a few minutes.
+            </p>
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+                <a href="{% url 'accounts:register' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-user-plus me-2"></i>Register as Volunteer
+                </a>
+                <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                </a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<style>
+    .hero-section {
+        background: linear-gradient(180deg, rgba(13, 110, 253, 0.05) 0%, rgba(25, 135, 84, 0.05) 100%);
+    }
+
+    .card {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.2);
+    }
+</style>
+{% endblock %}

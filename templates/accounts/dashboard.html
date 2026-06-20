@@ -1,0 +1,295 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - VolunteerHub{% endblock %}
+
+{% block content %}
+<!-- Welcome Section -->
+<div class="row mb-4">
+    <div class="col-lg-8">
+        <div class="hero-banner mb-0">
+            <h1 class="mb-2">
+                <i class="fas fa-tachometer-alt"></i>
+                Welcome, {{ user.first_name|default:user.username }}!
+            </h1>
+            <p>Here's your volunteer dashboard</p>
+        </div>
+    </div>
+    <div class="col-lg-4 d-flex align-items-center">
+        <div class="card w-100" style="background: linear-gradient(135deg, #ffc107, #ff9500); border: none; color: white;">
+            <div class="card-body text-center">
+                <h6 class="mb-2">Volunteer Level</h6>
+                <h3 class="mb-0">
+                    <i class="fas fa-star me-2"></i>
+                    Gold Member
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Grid -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6 col-lg-3">
+        <div class="stats-card">
+            <i class="fas fa-calendar-check" style="color: #0d6efd;"></i>
+            <div class="stat-number">12</div>
+            <div class="stat-label">Events Attended</div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="stats-card">
+            <i class="fas fa-clock" style="color: #198754;"></i>
+            <div class="stat-number">56</div>
+            <div class="stat-label">Hours Volunteered</div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="stats-card">
+            <i class="fas fa-trophy" style="color: #ffc107;"></i>
+            <div class="stat-number">8</div>
+            <div class="stat-label">Achievements</div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="stats-card">
+            <i class="fas fa-heart" style="color: #dc3545;"></i>
+            <div class="stat-number">245</div>
+            <div class="stat-label">Lives Impacted</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Upcoming Events -->
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-calendar-alt me-2"></i>
+                Upcoming Events
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    <a href="#" class="list-group-item list-group-item-action p-3 border-bottom">
+                        <div class="d-flex align-items-start">
+                            <div class="flex-shrink-0">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #0d6efd, #198754); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                                    <i class="fas fa-food-donation"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1">Community Food Drive</h6>
+                                <p class="mb-1 text-muted small">
+                                    <i class="fas fa-calendar me-1"></i>March 25, 2026 • 9:00 AM - 1:00 PM
+                                </p>
+                                <p class="mb-0 text-muted small">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Downtown Community Center
+                                </p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <span class="badge bg-success">Registered</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="list-group-item list-group-item-action p-3 border-bottom">
+                        <div class="d-flex align-items-start">
+                            <div class="flex-shrink-0">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #198754, #0d6efd); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                                    <i class="fas fa-tree"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1">Park Cleanup Initiative</h6>
+                                <p class="mb-1 text-muted small">
+                                    <i class="fas fa-calendar me-1"></i>March 28, 2026 • 10:00 AM - 2:00 PM
+                                </p>
+                                <p class="mb-0 text-muted small">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Riverside Park
+                                </p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <span class="badge bg-warning">In 9 days</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="list-group-item list-group-item-action p-3">
+                        <div class="d-flex align-items-start">
+                            <div class="flex-shrink-0">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #ffc107, #0d6efd); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1">Literacy Tutoring Program</h6>
+                                <p class="mb-1 text-muted small">
+                                    <i class="fas fa-calendar me-1"></i>April 2, 2026 • 3:00 PM - 5:00 PM
+                                </p>
+                                <p class="mb-0 text-muted small">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Public Library
+                                </p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <span class="badge bg-info">In 14 days</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <a href="{% url 'events:event_list' %}" class="text-decoration-none">
+                    <i class="fas fa-arrow-right me-2"></i>View All Events
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions & Profile -->
+    <div class="col-lg-4">
+        <!-- Quick Actions -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-lightning-bolt me-2"></i>
+                Quick Actions
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'events:event_list' %}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus-circle me-2"></i>Find Events
+                    </a>
+                    <button class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-user me-2"></i>Edit Profile
+                    </button>
+                    <button class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-cog me-2"></i>Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-user-circle me-2"></i>
+                Profile Information
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #0d6efd, #198754); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem; margin: 0 auto 1rem;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h5>{{ user.get_full_name|default:user.username }}</h5>
+                    <p class="text-muted small mb-0">{{ user.email }}</p>
+                </div>
+                <div class="mb-3 pb-3 border-bottom">
+                    <small class="text-muted d-block mb-1">Role</small>
+                    <span class="badge bg-primary">Volunteer</span>
+                </div>
+                <div>
+                    <small class="text-muted d-block mb-1">Member Since</small>
+                    <span class="fw-bold">January 15, 2026</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Achievements -->
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-trophy me-2"></i>
+                Recent Achievements
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-star" style="font-size: 1.5rem; color: #ffc107; margin-right: 0.75rem;"></i>
+                        <span class="fw-bold">5 Events Completed</span>
+                    </div>
+                    <small class="text-muted">Earned 5 days ago</small>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-bolt" style="font-size: 1.5rem; color: #ffc107; margin-right: 0.75rem;"></i>
+                        <span class="fw-bold">50 Hours Milestone</span>
+                    </div>
+                    <small class="text-muted">Earned 2 weeks ago</small>
+                </div>
+                <div>
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-heart" style="font-size: 1.5rem; color: #dc3545; margin-right: 0.75rem;"></i>
+                        <span class="fw-bold">Community Champion</span>
+                    </div>
+                    <small class="text-muted">Earned 1 month ago</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Activity Section -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-history me-2"></i>
+                Recent Activity
+            </div>
+            <div class="card-body">
+                <div class="timeline">
+                    <div class="timeline-item mb-4 pb-4 border-bottom" style="position: relative; padding-left: 40px;">
+                        <div style="width: 12px; height: 12px; background: #198754; border-radius: 50%; position: absolute; left: 0; top: 5px;"></div>
+                        <p class="mb-1"><strong>Completed</strong> Community Food Drive</p>
+                        <small class="text-muted">March 25, 2026 • 4 hours contributed</small>
+                    </div>
+
+                    <div class="timeline-item mb-4 pb-4 border-bottom" style="position: relative; padding-left: 40px;">
+                        <div style="width: 12px; height: 12px; background: #0d6efd; border-radius: 50%; position: absolute; left: 0; top: 5px;"></div>
+                        <p class="mb-1"><strong>Registered</strong> for Park Cleanup Initiative</p>
+                        <small class="text-muted">March 20, 2026</small>
+                    </div>
+
+                    <div class="timeline-item" style="position: relative; padding-left: 40px;">
+                        <div style="width: 12px; height: 12px; background: #ffc107; border-radius: 50%; position: absolute; left: 0; top: 5px;"></div>
+                        <p class="mb-1"><strong>Joined</strong> VolunteerHub</p>
+                        <small class="text-muted">January 15, 2026</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .stats-card {
+        background: white;
+        padding: 2rem 1.5rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .stats-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.2);
+    }
+
+    .list-group-item {
+        transition: all 0.3s ease;
+    }
+
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+    }
+
+    .timeline-item {
+        padding-left: 40px;
+    }
+</style>
+
+<script>
+    // Add any dashboard-specific JavaScript here
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Dashboard loaded successfully');
+    });
+</script>
+{% endblock %}

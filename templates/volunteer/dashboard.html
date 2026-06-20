@@ -1,0 +1,279 @@
+{% extends 'base.html' %}
+
+{% block title %}Volunteer Dashboard - VolunteerHub{% endblock %}
+
+{% block content %}
+<!-- Welcome Section -->
+<div class="row mb-4">
+    <div class="col-lg-8">
+        <div class="hero-banner mb-0">
+            <h1 class="mb-2">
+                <i class="fas fa-heart"></i>
+                Welcome, {{ user.first_name|default:user.username }}!
+            </h1>
+            <p>Thank you for volunteering to make a difference</p>
+        </div>
+    </div>
+    <div class="col-lg-4 d-flex align-items-center">
+        <div class="card w-100" style="background: linear-gradient(135deg, #198754, #0d6efd); border: none; color: white;">
+            <div class="card-body text-center">
+                <h6 class="mb-2">Volunteer Status</h6>
+                <h3 class="mb-0">
+                    <i class="fas fa-star me-2"></i>
+                    Active
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Grid -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6 col-lg-3">
+        <div class="stats-card">
+            <i class="fas fa-calendar-check" style="color: #0d6efd;"></i>
+            <div class="stat-number">{{ total_events_registered }}</div>
+            <div class="stat-label">Events Registered</div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="stats-card">
+            <i class="fas fa-tasks" style="color: #198754;"></i>
+            <div class="stat-number">{{ tasks.count }}</div>
+            <div class="stat-label">Tasks Assigned</div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="stats-card">
+            <i class="fas fa-check-circle" style="color: #ffc107;"></i>
+            <div class="stat-number">{{ completed_tasks }}</div>
+            <div class="stat-label">Tasks Completed</div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="stats-card">
+            <i class="fas fa-clock" style="color: #dc3545;"></i>
+            <div class="stat-number">{{ total_hours }}h</div>
+            <div class="stat-label">Hours Volunteered</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- My Tasks -->
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-tasks me-2"></i>
+                My Assigned Tasks
+            </div>
+            <div class="card-body p-0">
+                {% if tasks %}
+                    <div class="list-group list-group-flush">
+                        {% for task in tasks %}
+                            <div class="list-group-item p-3 border-bottom">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">{{ task.title }}</h6>
+                                        <small class="text-muted">
+                                            Event: <strong>{{ task.registration.event.name|default:task.registration.event_name }}</strong>
+                                        </small>
+                                        <p class="mb-2 mt-2 text-muted">{{ task.description }}</p>
+                                        <div class="small">
+                                            <i class="fas fa-clock me-1"></i>
+                                            Updated: {{ task.updated_at|date:"M d, Y H:i" }}
+                                        </div>
+                                    </div>
+                                    <div class="ms-3 text-end">
+                                        <span class="badge badge-lg" style="background-color:
+                                            {% if task.status == 'completed' %}#198754
+                                            {% elif task.status == 'in_progress' %}#0d6efd
+                                            {% elif task.status == 'on_hold' %}#ffc107
+                                            {% else %}#6c757d{% endif %}; padding: 0.5rem 1rem;">
+                                            {{ task.get_status_display }}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Status Update -->
+                                {% if task.status != 'completed' %}
+                                    <div class="mt-3 pt-3 border-top">
+                                        <form method="POST" action="{% url 'events:update_task_status' task.id %}"
+                                              style="display: inline;">
+                                            {% csrf_token %}
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <small class="text-muted">Update status:</small>
+                                                <div class="btn-group btn-group-sm" role="group">
+                                                    {% if task.status != 'in_progress' %}
+                                                        <button type="submit" name="status" value="in_progress"
+                                                                class="btn btn-outline-primary">
+                                                            <i class="fas fa-play me-1"></i>In Progress
+                                                        </button>
+                                                    {% endif %}
+                                                    {% if task.status != 'on_hold' %}
+                                                        <button type="submit" name="status" value="on_hold"
+                                                                class="btn btn-outline-warning">
+                                                            <i class="fas fa-pause me-1"></i>On Hold
+                                                        </button>
+                                                    {% endif %}
+                                                    {% if task.status != 'completed' %}
+                                                        <button type="submit" name="status" value="completed"
+                                                                class="btn btn-outline-success">
+                                                            <i class="fas fa-check me-1"></i>Complete
+                                                        </button>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-5 text-muted">
+                        <i class="fas fa-inbox" style="font-size: 3rem; opacity: 0.5;"></i>
+                        <p class="mt-3">No tasks assigned yet</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Registered Events -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-calendar-alt me-2"></i>
+                My Events
+            </div>
+            <div class="card-body p-0">
+                {% if registered_events %}
+                    <div class="list-group list-group-flush">
+                        {% for registration in registered_events %}
+                            <div class="list-group-item p-3 border-bottom">
+                                <div class="mb-2">
+                                    <h6 class="mb-1">{{ registration.event.name|default:registration.event_name }}</h6>
+                                    <small class="text-muted d-block">
+                                        <i class="fas fa-calendar me-1"></i>
+                                        {{ registration.event.date|date:"M d, Y"|default:"TBA" }}
+                                    </small>
+                                    <small class="text-muted d-block">
+                                        <i class="fas fa-map-marker-alt me-1"></i>
+                                        {{ registration.event.location|default:"Location TBA" }}
+                                    </small>
+                                </div>
+                                <div>
+                                    <span class="badge {% if registration.status == 'approved' %}bg-success{% elif registration.status == 'pending' %}bg-warning{% else %}bg-danger{% endif %}">
+                                        {{ registration.get_status_display }}
+                                    </span>
+                                </div>
+                                <div class="mt-2 pt-2 border-top">
+                                    <small class="text-muted">
+                                        Tasks: <strong>{{ registration.tasks.count }}</strong>
+                                    </small>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-5 text-muted">
+                        <i class="fas fa-inbox" style="font-size: 3rem; opacity: 0.5;"></i>
+                        <p class="mt-3">Not registered for any events yet</p>
+                        <a href="{% url 'events:event_list' %}" class="btn btn-primary btn-sm mt-2">
+                            <i class="fas fa-plus-circle me-1"></i>Browse Events
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Quick Action -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <i class="fas fa-lightning-bolt me-2"></i>
+                Quick Actions
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'events:event_list' %}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus-circle me-2"></i>Find Events
+                    </a>
+                    <button class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-user me-2"></i>Edit Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Activity Timeline -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-history me-2"></i>
+                Task Activity
+            </div>
+            <div class="card-body">
+                {% if tasks %}
+                    <div class="timeline">
+                        {% for task in tasks|slice:":5" %}
+                            <div class="timeline-item mb-4 pb-4 {% if not forloop.last %}border-bottom{% endif %}"
+                                 style="position: relative; padding-left: 40px;">
+                                <div style="width: 12px; height: 12px; background:
+                                    {% if task.status == 'completed' %}#198754
+                                    {% elif task.status == 'in_progress' %}#0d6efd
+                                    {% elif task.status == 'on_hold' %}#ffc107
+                                    {% else %}#6c757d{% endif %};
+                                    border-radius: 50%; position: absolute; left: 0; top: 5px;">
+                                </div>
+                                <p class="mb-1">
+                                    <strong>{{ task.title }}</strong>
+                                    <span class="badge badge-sm" style="background-color:
+                                        {% if task.status == 'completed' %}#198754
+                                        {% elif task.status == 'in_progress' %}#0d6efd
+                                        {% else %}#ffc107{% endif %};">
+                                        {{ task.get_status_display }}
+                                    </span>
+                                </p>
+                                <small class="text-muted">{{ task.updated_at|date:"M d, Y H:i" }}</small>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-5 text-muted">
+                        <p>No task activity yet</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .stats-card {
+        background: white;
+        padding: 2rem 1.5rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .stats-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.2);
+    }
+
+    .badge-lg {
+        font-size: 0.95rem !important;
+    }
+
+    .badge-sm {
+        font-size: 0.75rem !important;
+        padding: 0.25rem 0.5rem !important;
+    }
+</style>
+{% endblock %}

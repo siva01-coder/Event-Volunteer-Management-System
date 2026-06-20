@@ -1,0 +1,253 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - VolunteerHub{% endblock %}
+
+{% block content %}
+<div class="auth-card fade-in">
+    <h2 class="card-title">
+        <i class="fas fa-user-plus text-success"></i>
+        Create Account
+    </h2>
+    <p class="card-subtitle">Join VolunteerHub and start making a difference</p>
+
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <strong>Registration Error!</strong>
+            {% for error in form.non_field_errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST" novalidate>
+        {% csrf_token %}
+        
+        <!-- Username Field -->
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}" class="form-label">
+                <i class="fas fa-user text-primary"></i>
+                Username
+            </label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="form-text text-danger">
+                    {% for error in form.username.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <small class="form-text text-muted">
+                    <i class="fas fa-info-circle"></i>
+                    150 characters or fewer. Letters, digits and @/./+/-/_ only.
+                </small>
+            {% endif %}
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}" class="form-label">
+                <i class="fas fa-envelope text-primary"></i>
+                Email Address
+            </label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="form-text text-danger">
+                    {% for error in form.email.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <small class="form-text text-muted">
+                    <i class="fas fa-info-circle"></i>
+                    We'll use this for important notifications.
+                </small>
+            {% endif %}
+        </div>
+
+        <!-- First Name Field -->
+        {% if form.first_name %}
+            <div class="form-group">
+                <label for="{{ form.first_name.id_for_label }}" class="form-label">
+                    <i class="fas fa-id-card text-primary"></i>
+                    First Name
+                </label>
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                    <div class="form-text text-danger">
+                        {% for error in form.first_name.errors %}
+                            <small>{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <!-- Last Name Field -->
+        {% if form.last_name %}
+            <div class="form-group">
+                <label for="{{ form.last_name.id_for_label }}" class="form-label">
+                    <i class="fas fa-id-card text-primary"></i>
+                    Last Name
+                </label>
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                    <div class="form-text text-danger">
+                        {% for error in form.last_name.errors %}
+                            <small>{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <!-- Role Selection -->
+        {% if form.role %}
+            <div class="form-group">
+                <label for="{{ form.role.id_for_label }}" class="form-label">
+                    <i class="fas fa-user-tag text-primary"></i>
+                    Select Your Role
+                </label>
+                {{ form.role }}
+                {% if form.role.errors %}
+                    <div class="form-text text-danger">
+                        {% for error in form.role.errors %}
+                            <small>{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <small class="form-text text-muted">
+                        <i class="fas fa-info-circle"></i>
+                        Choose your role to get started
+                    </small>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <!-- Password Field -->
+        <div class="form-group">
+            <label for="{{ form.password1.id_for_label }}" class="form-label">
+                <i class="fas fa-lock text-primary"></i>
+                Password
+            </label>
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+                <div class="form-text text-danger">
+                    {% for error in form.password1.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <small class="form-text text-muted">
+                    <i class="fas fa-info-circle"></i>
+                    At least 8 characters with uppercase, lowercase, numbers and symbols.
+                </small>
+            {% endif %}
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="form-group">
+            <label for="{{ form.password2.id_for_label }}" class="form-label">
+                <i class="fas fa-lock text-primary"></i>
+                Confirm Password
+            </label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+                <div class="form-text text-danger">
+                    {% for error in form.password2.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <small class="form-text text-muted">
+                    <i class="fas fa-info-circle"></i>
+                    Must match the password above.
+                </small>
+            {% endif %}
+        </div>
+
+        <!-- Terms & Conditions -->
+        <div class="form-group form-check mb-3">
+            <input type="checkbox" class="form-check-input" id="agreeTerms" name="agree_terms" required>
+            <label class="form-check-label" for="agreeTerms">
+                I agree to the <a href="#" class="text-primary">Terms of Service</a> and <a href="#" class="text-primary">Privacy Policy</a>
+            </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-success w-100 btn-lg">
+            <i class="fas fa-check-circle me-2"></i>Create Account
+        </button>
+    </form>
+
+    <!-- Links -->
+    <div class="auth-link">
+        <p>Already have an account? <a href="{% url 'accounts:login' %}">Login here</a></p>
+    </div>
+
+    <hr class="my-3">
+
+    <div class="text-center">
+        <small class="text-muted">
+            <i class="fas fa-shield-alt me-1"></i>
+            Your data is safe and secure with us
+        </small>
+    </div>
+</div>
+
+<style>
+    .form-control,
+    .form-select {
+        margin-bottom: 0.5rem;
+        border-radius: 0.5rem;
+    }
+
+    .form-control.is-invalid,
+    .form-select.is-invalid {
+        border-color: #dc3545;
+        background-image: none;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+
+    .auth-link a {
+        color: #0d6efd;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .auth-link a:hover {
+        color: #198754;
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    // Enhance form validation styling
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const inputs = form.querySelectorAll('input, select, textarea');
+        
+        inputs.forEach(input => {
+            input.classList.add('form-control');
+            if (input.tagName.toLowerCase() === 'select') {
+                input.classList.remove('form-control');
+                input.classList.add('form-select');
+            }
+        });
+
+        // Form submission validation
+        form.addEventListener('submit', function(e) {
+            if (!form.checkValidity()) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        });
+    });
+</script>
+{% endblock %}
