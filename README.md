@@ -51,4 +51,3 @@ The Event Volunteer Management System is a web-based platform developed using Dj
 ## Author
 
 Siva M
-Sri Eshwar College of Engineering
